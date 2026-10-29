@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10131b">
+<title>Fiche SOA — Révision express</title>
+<style>
+:root{color-scheme:dark;--bg:#10131b;--panel:#191e29;--panel2:#202737;--text:#eef2fa;--muted:#aeb8ca;--line:#30394b;--accent:#a997ff;--green:#72dec3;--yellow:#f4d47b;--code:#0b0e14}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}header,main,footer{width:min(760px,100%);margin:auto;padding:20px}header{padding-top:34px;padding-bottom:12px}h1{font-size:clamp(27px,8vw,39px);line-height:1.14;margin:0 0 10px;letter-spacing:-.5px}h2{font-size:22px;line-height:1.25;margin:0 0 12px;color:var(--accent)}h3{font-size:17px;margin:18px 0 6px;color:var(--green)}p{margin:8px 0}header p,.muted{color:var(--muted)}main{padding-top:8px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0;box-shadow:0 8px 22px #0002}.pill{display:inline-block;background:#302c4a;color:#ded7ff;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;margin:3px 4px 3px 0}ul,ol{padding-left:23px;margin:8px 0}li{padding:2px 0}strong{color:#fff}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:#d8ceff}pre{background:var(--code);border:1px solid var(--line);border-radius:12px;padding:14px;overflow:auto;font-size:13px;line-height:1.5;margin:10px 0;white-space:pre}pre code{color:#d7e5ff}.callout{border-left:3px solid var(--yellow);padding:9px 12px;background:#282519;border-radius:0 9px 9px 0;margin:12px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini{background:var(--panel2);border-radius:12px;padding:12px}.mini b{display:block;color:var(--green);margin-bottom:3px}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:9px 6px}th{color:var(--green)}.toc{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}.toc a{color:var(--text);text-decoration:none;background:var(--panel2);border:1px solid var(--line);padding:6px 10px;border-radius:999px;font-size:13px}.toc a:hover{border-color:var(--accent)}footer{color:var(--muted);font-size:13px;padding-bottom:40px}.nowrap{white-space:nowrap}
+@media(max-width:520px){body{font-size:15px}header,main,footer{padding-left:15px;padding-right:15px}.card{padding:15px;border-radius:14px}.grid{grid-template-columns:1fr}pre{font-size:12px;padding:12px}table{font-size:13px}th,td{padding:8px 4px}}
+@media print{body{background:#10131b}}
+</style>
+</head>
+<body>
+<header>
+  <span class="pill">SOA · RÉVISION EXPRESS</span>
+  <h1>Fiche de révision</h1>
+  <p>Les notions essentielles et le code à reconnaître pour un examen écrit d’une heure.</p>
+  <nav class="toc"><a href="#notions">Notions</a><a href="#rest">REST</a><a href="#soap">SOAP</a><a href="#rmi-rpc">RMI / RPC</a><a href="#chaines">Chaînes</a><a href="#examen">Examen</a></nav>
+</header>
+<main>
+<section class="card" id="notions">
+<h2>1. L’idée générale</h2>
+<p>Un <strong>service Web</strong> permet à un programme, le <strong>client</strong>, de demander une opération ou des données à un autre programme, le <strong>serveur</strong>, via un réseau.</p>
+<div class="callout"><strong>Client → demande → serveur → résultat → client</strong></div>
+<h3>Les notions à distinguer</h3>
+<div class="grid">
+<div class="mini"><b>REST</b>Style qui utilise les méthodes HTTP et des URL. Réponse souvent en JSON.</div>
+<div class="mini"><b>SOAP</b>Règles pour échanger des messages de service, généralement écrits en XML.</div>
+<div class="mini"><b>XML</b>Format structuré avec des balises qui nomment les données.</div>
+<div class="mini"><b>WSDL</b>Description d’un service SOAP : opérations, paramètres et résultats.</div>
+<div class="mini"><b>RPC</b>Demander à un serveur distant d’exécuter une fonction et renvoyer son résultat.</div>
+<div class="mini"><b>RMI</b>Mécanisme Java pour appeler les méthodes d’un objet distant.</div>
+</div>
+<p class="callout"><strong>Mémo :</strong> RPC est le principe d’un appel distant ; RMI est une façon Java de le faire ; SOAP transporte des messages XML ; WSDL explique comment appeler le service.</p>
+</section>
+
+<section class="card" id="rest">
+<h2>2. REST : requête et réponse</h2>
+<pre><code>GET https://api.exemple.com/pays?nom=France</code></pre>
+<ul><li><code>GET</code> : méthode HTTP pour lire une ressource.</li><li><code>https</code> : protocole ; <code>api.exemple.com</code> : serveur.</li><li><code>/pays</code> : ressource ; <code>?</code> commence les paramètres.</li><li><code>&amp;</code> sépare plusieurs paramètres. La réponse est souvent en JSON.</li></ul>
+<p><strong>Codes :</strong> <code>200</code> = succès ; <code>404</code> = ressource introuvable. Vérifier le code avant d’utiliser la réponse.</p>
+</section>
+
+<section class="card" id="soap">
+<h2>3. SOAP : étapes et code</h2>
+<ol><li>L’interface déclare les opérations.</li><li>L’implémentation contient le traitement.</li><li>Le serveur publie le service.</li><li>Le client lit le WSDL, appelle une opération et reçoit le résultat.</li></ol>
+<h3>Déclarer les opérations</h3>
+<pre><code>@WebService
+public interface StringService {
+    @WebMethod
+    String reverse(String chaine);
+
+    @WebMethod
+    int length(String chaine);
+}</code></pre>
+<p><code>@WebService</code> marque le service ; <code>@WebMethod</code> marque une opération accessible au client. Le type avant le nom est le type retourné.</p>
+<h3>Implémenter une opération</h3>
+<pre><code>public String reverse(String chaine) {
+    if (chaine == null) return "";
+    return new StringBuilder(chaine).reverse().toString();
+}
+
+public int length(String chaine) {
+    if (chaine == null) return 0;
+    return chaine.length();
+}</code></pre>
+<p><code>reverse("salut")</code> renvoie <code>"tulas"</code> ; <code>length("salut")</code> renvoie <code>5</code>.</p>
+<h3>Publier et appeler</h3>
+<pre><code>// Serveur Java
+Endpoint.publish(
+    "http://localhost:8081/StringService",
+    new StringServiceImpl()
+);
+
+# Client Python
+client = Client("http://localhost:8081/StringService?wsdl")
+resultat = client.service.reverse("salut")</code></pre>
+<p>SOAP transporte la demande et la réponse. WSDL décrit les opérations, les paramètres et les résultats attendus.</p>
+</section>
+
+<section class="card" id="rmi-rpc">
+<h2>4. RMI et RPC</h2>
+<h3>RMI — Java distant</h3>
+<pre><code>public interface Calculatrice extends Remote {
+    int add(int a, int b) throws RemoteException;
+}
+
+public class CalculatriceImpl
+        extends UnicastRemoteObject
+        implements Calculatrice {
+    public int add(int a, int b) throws RemoteException {
+        return a + b;
+    }
+}
+
+// Le client appelle l'objet distant
+calculatrice.add(10, 20);</code></pre>
+<p>Le serveur enregistre l’objet dans le registre RMI ; le client le recherche par son nom. Le TP utilise le port <code>1099</code>. Une <code>RemoteException</code> signale qu’un appel distant peut échouer.</p>
+<h3>XML-RPC — appel de fonction à distance</h3>
+<pre><code>// Client Python : ressemble à un appel local,
+// mais la fonction s’exécute sur le serveur distant.
+serveur.Calcul.addition(a, b)</code></pre>
+<p>Le serveur associe le nom <code>Calcul</code> à une classe de service, puis le client demande l’exécution d’une méthode. Le résultat revient au client.</p>
+</section>
+
+<section class="card" id="chaines">
+<h2>5. Code Java sur les chaînes</h2>
+<h3>Compter les voyelles</h3>
+<pre><code>public int countVowels(String chaine) {
+    if (chaine == null) return 0;
+
+    int compteur = 0;
+    for (int i = 0; i &lt; chaine.length(); i++) {
+        char lettre = Character.toLowerCase(
+            chaine.charAt(i)
+        );
+        if ("aeiou".indexOf(lettre) &gt;= 0) {
+            compteur++;
+        }
+    }
+    return compteur;
+}</code></pre>
+<p><code>countVowels("Salut")</code> renvoie <code>2</code>.</p>
+<h3>Vérifier un palindrome</h3>
+<pre><code>public boolean isPalindrome(String chaine) {
+    if (chaine == null) return false;
+
+    String texte = chaine.replaceAll("\\s+", "")
+                         .toLowerCase();
+    String inverse = new StringBuilder(texte)
+                         .reverse().toString();
+    return texte.equals(inverse);
+}</code></pre>
+<p>Cette version ignore les espaces et la casse : <code>"Radar"</code> donne <code>true</code>, <code>"salut"</code> donne <code>false</code>.</p>
+<h3>Opérations utiles</h3>
+<pre><code>chaine.length();                         // longueur
+chaine.toUpperCase();                    // majuscules
+chaine.toLowerCase();                    // minuscules
+chaine.replace(ancien, nouveau);         // remplacement
+chaine.contains(sousChaine);             // contient ?
+new StringBuilder(chaine).reverse();     // inversion</code></pre>
+</section>
+
+<section class="card" id="examen">
+<h2>6. Questions probables et pièges</h2>
+<p><strong>Qu’est-ce que SOAP ?</strong> Un protocole pour échanger des messages de service, généralement en XML.</p>
+<p><strong>À quoi sert WSDL ?</strong> À décrire les opérations, paramètres et résultats d’un service SOAP.</p>
+<p><strong>Qu’est-ce que RPC ?</strong> Le client demande au serveur distant d’exécuter une fonction et de renvoyer le résultat.</p>
+<p><strong>Différence RMI / RPC ?</strong> RPC est le principe général ; RMI est le mécanisme Java d’appel de méthodes d’objets distants.</p>
+<p><strong>Comment le client reçoit-il le résultat SOAP ?</strong> Le serveur exécute l’opération et renvoie le résultat dans une réponse SOAP.</p>
+<p><strong>Dans une URL REST, que signifient <code>?</code> et <code>&amp;</code> ?</strong> Début des paramètres, puis séparation entre paramètres.</p>
+<h3>Pièges de syntaxe Java</h3>
+<ul><li>Écrire <code>String</code> avec une majuscule.</li><li>Lire un caractère avec <code>chaine.charAt(i)</code>, pas <code>chaine[i]</code>.</li><li>Dans une boucle, écrire <code>i &lt; chaine.length()</code>, pas <code>i &lt;= chaine.length()</code>.</li><li>Comparer les chaînes avec <code>.equals()</code>, pas <code>==</code>.</li><li>Créer un inverse avec <code>new StringBuilder(chaine)</code>.</li></ul>
+<div class="callout"><strong>Pour le code :</strong> commence par la signature (type retourné, nom et paramètres), écris le traitement, puis le <code>return</code>. Pense aux chaînes vides, aux majuscules, aux espaces et à <code>null</code> si l’énoncé le demande.</div>
+</section>
+</main>
+<footer>Fiche construite à partir des TPs REST, SOAP, RMI et XML-RPC du cours SOA.</footer>
+</body>
+</html>
